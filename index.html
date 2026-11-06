@@ -32,6 +32,8 @@
       border: 1px solid var(--line);
       border-radius: 20px;
       padding: 48px 40px;
+      position: relative;
+      z-index: 1;
     }
     .avatar {
       width: 88px; height: 88px;
@@ -65,11 +67,56 @@
       transition: border-color .2s;
     }
     .links a:hover { border-color: var(--accent); }
+    body { overflow-x: hidden; }
+    .shapes { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .shape { position: absolute; border: 1px solid rgba(95, 122, 150, 0.32); }
+    .shape.circle { width: 260px; height: 260px; border-radius: 50%; top: 7%; left: 5%; }
+    .shape.ring { width: 150px; height: 150px; border-radius: 50%; border-style: dashed; bottom: 10%; left: 9%; opacity: 0.55; }
+    .shape.square {
+      width: 150px; height: 150px; border-radius: 22px;
+      bottom: 9%; right: 7%; transform: rotate(18deg);
+      animation: drift 11s ease-in-out infinite;
+    }
+    .shape.bar {
+      height: 2px; width: 300px; border: none; border-radius: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      top: 52%; left: -60px; transform: rotate(-14deg); opacity: 0.45;
+    }
+    .shape.dot {
+      width: 8px; height: 8px; border-radius: 50%; border: none;
+      background: var(--accent); top: 24%; right: 16%; opacity: 0.7;
+      animation: pulse 4s ease-in-out infinite;
+    }
+    .shape.triangle {
+      width: 0; height: 0; border: none; top: 16%; right: 14%;
+      border-left: 34px solid transparent;
+      border-right: 34px solid transparent;
+      border-bottom: 58px solid rgba(95, 122, 150, 0.18);
+    }
+    @keyframes drift {
+      0%, 100% { transform: rotate(18deg) translateY(0); }
+      50% { transform: rotate(18deg) translateY(-16px); }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.5); opacity: 0.35; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .shape.square, .shape.dot { animation: none; }
+    }
     .links a.primary { background: var(--accent); border-color: var(--accent); color: white; }
     footer { margin-top: 32px; color: var(--muted); font-size: 12px; text-align: center; }
   </style>
 </head>
 <body>
+  <div class="shapes" aria-hidden="true">
+    <div class="shape circle"></div>
+    <div class="shape ring"></div>
+    <div class="shape square"></div>
+    <div class="shape bar"></div>
+    <div class="shape dot"></div>
+    <div class="shape triangle"></div>
+  </div>
   <main class="card">
     <div class="avatar">J</div>
     <h1>jh19932002</h1>
